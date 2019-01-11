@@ -12,17 +12,29 @@
         android:id="@+id/button_choose_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose file" />
+        android:text="@string/chooseFile" />
+
+    <Button
+        android:id="@+id/btnJustGone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progress_bar"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_toStartOf="@id/button_upload"
+        android:layout_toLeftOf="@id/button_upload"
+        android:text="@string/justGonePage" />
 
     <EditText
         android:id="@+id/edit_text_file_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_toEndOf="@+id/button_choose_image"
-        android:hint="Enter file name"
         android:layout_toRightOf="@+id/button_choose_image"
-        android:layout_marginLeft="16dp" />
+        android:hint="@string/enterFileName"
+        android:inputType="text" />
 
     <ImageView
         android:id="@+id/image_view"
@@ -41,7 +53,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="11dp"
-        android:hint="Enter Food Description" />
+        android:hint="@string/enterDesc"
+        android:inputType="text" />
     <ProgressBar
         android:id="@+id/progress_bar"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -58,21 +71,21 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Upload" />
+        android:text="@string/upload" />
 
     <TextView
         android:id="@+id/text_view_show_uploads"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button_upload"
         android:layout_alignTop="@+id/button_upload"
+        android:layout_alignBottom="@+id/button_upload"
         android:layout_marginStart="25dp"
-        android:layout_toEndOf="@+id/button_upload"
-        android:gravity="center"
-        android:text="Show Uploads"
-        android:textSize="16sp"
         android:layout_marginLeft="25dp"
+        android:layout_toEndOf="@+id/button_upload"
         android:layout_toRightOf="@+id/button_upload"
+        android:gravity="center"
+        android:text="@string/showUploads"
+        android:textSize="16sp"
         tools:ignore="RtlCompat" />
 
 </RelativeLayout>

@@ -1,6 +1,13 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Free Food</string>
     <string name="foodDescription">Description:</string>
     <string name="addNewFood">Add Food</string>
     <string name="homePage">Home Page</string>
+    <string name="justGonePage">Just Gone</string>
+    <string name="chooseFile">Choose file</string>
+    <string name="upload">Upload</string>
+    <string name="showUploads">Show Uploads</string>
+    <string name="enterFileName">Enter file name</string>
+    <string name="enterDesc">Enter Description</string>
+
 </resources>

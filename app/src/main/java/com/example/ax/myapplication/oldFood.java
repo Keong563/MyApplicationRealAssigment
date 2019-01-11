@@ -42,6 +42,7 @@ public class oldFood extends AppCompatActivity {
     private ImageView mImageView;
     private ProgressBar mProgressBar;
     private EditText foodDesc;
+    private Button mJustGonePage;
 
     private Uri mImageUri;
 
@@ -63,13 +64,18 @@ public class oldFood extends AppCompatActivity {
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
         foodDesc = findViewById(R.id.edit_text_file_desc);
+        mJustGonePage = findViewById(R.id.btnJustGone);
 
         mStorageRef = FirebaseStorage.getInstance().getReference("oldFoodImage");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("oldFoodImage");
 
+
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                foodDesc.setText("");
+                mImageView.setImageResource(android.R.color.transparent);
+                mEditTextFileName.setText("");
                 openFileChooser();
             }
         });
@@ -92,7 +98,14 @@ public class oldFood extends AppCompatActivity {
                 openImagesActivity();
             }
         });
+
+        mJustGonePage.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openJustGone();
+            }
+        });
     }
+
 
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -121,14 +134,14 @@ public class oldFood extends AppCompatActivity {
     }
 
 
-    public void  uploadeFile(){
-        if(mImageUri != null){
-            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()+"."+
+    public void uploadeFile() {
+        if (mImageUri != null) {
+            final StorageReference fileReference = mStorageRef.child(System.currentTimeMillis() + "." +
                     getFileExtension(mImageUri));
             mUploadTask = fileReference.putFile(mImageUri)
 
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        private static final String TAG ="PhotoAlbumActivity" ;
+                        private static final String TAG = "PhotoAlbumActivity";
 
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -138,16 +151,16 @@ public class oldFood extends AppCompatActivity {
                                 public void run() {
                                     mProgressBar.setProgress(0);
                                 }
-                            },500);
-                            Toast.makeText(oldFood.this,"Upload Successful",Toast.LENGTH_LONG).show();
+                            }, 500);
+                            Toast.makeText(oldFood.this, "Upload Successful", Toast.LENGTH_LONG).show();
 //***************************************************************************************************************
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                            while (!urlTask.isSuccessful());
+                            while (!urlTask.isSuccessful()) ;
                             Uri downloadUrl = urlTask.getResult();
 
                             Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString());
-                            uploadOldFood upload = new uploadOldFood(mEditTextFileName.getText().toString().trim(),downloadUrl.toString(),foodDesc.getText().toString());
-                           // uploadOldFood upload = new uploadOldFood(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
+                            uploadOldFood upload = new uploadOldFood(mEditTextFileName.getText().toString().trim(), downloadUrl.toString(), foodDesc.getText().toString());
+                            // uploadOldFood upload = new uploadOldFood(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
 
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload);
@@ -158,19 +171,22 @@ public class oldFood extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(oldFood.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(oldFood.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = 100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount();
-                            mProgressBar.setProgress((int)progress);
+                            double progress = 100 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                            mProgressBar.setProgress((int) progress);
+
                         }
                     });
-        }else {
-            Toast.makeText(this,"NO File Selected",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "NO File Selected", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 
 
@@ -180,5 +196,9 @@ public class oldFood extends AppCompatActivity {
 //        Intent intent = new Intent(this, FoodDetail.class);
 //        startActivity(intent);
     }
-}
 
+    private void openJustGone(){
+        Intent intent = new Intent(this, requestedItem.class);
+        startActivity(intent);
+    }
+}

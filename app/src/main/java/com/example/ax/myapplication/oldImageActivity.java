@@ -97,8 +97,15 @@ public void onItemClick(int position) {
 
 @Override
 public void onWhatEverClick(int position) {
-        //Toast.makeText(this, "Whatever click at position: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Whatever click at position: " + position, Toast.LENGTH_SHORT).show();
+    int fff = position;
+//
+//    uploadOldFood selectedItem = mUploads.get(position);
+//    final String selectedKey = selectedItem.getKey();
+//
     Intent intent = new Intent(this, FoodDetail.class);
+    intent.putExtra("getSelectedPosition",fff);
+//  intent.putExtra("getSelectedPosition",selectedKey);
     startActivity(intent);
         }
 
@@ -115,7 +122,7 @@ public void onDeleteClick(int position) {
     //DatabaseReference imageRef = mDatabase22.getReference("oldFoodImage").child(selectedItem.getImageUrl());
     DatabaseReference imageRef = FirebaseDatabase.getInstance().getReference("oldFoodImage").child(selectedKey);
     //DatabaseReference imageRef2 = mDatabase22.getReferenceFromUrl(selectedKey);
-    // uploadOldFood upload = new uploadOldFood(mEditTextFileName.getText().toString().trim(),downloadUrl.toString(),foodDesc.getText().toString());
+    //uploadOldFood upload = new uploadOldFood(mEditTextFileName.getText().toString().trim(),downloadUrl.toString(),foodDesc.getText().toString());
     uploadOldFood gg = new uploadOldFood(selectedItem.getName().toString(), selectedItem.getImageUrl(), selectedItem.getFoodDescription().toString());
     String uploadId2 = mDatabaseRef2.push().getKey();
 
@@ -123,24 +130,24 @@ public void onDeleteClick(int position) {
 
     //mDatabaseRef
 
-    imageRef.removeValue();
+    //imageRef.removeValue();
 
-//    imageRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+    imageRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
 //
 //   // imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-//@Override
-//public void onSuccess(Void aVoid) {
-//        mDatabaseRef.child(selectedKey).removeValue();
-//        Toast.makeText(oldImageActivity.this, "Item deleted", Toast.LENGTH_SHORT).show(); }
-//        });
-//}
-//
+@Override
+public void onSuccess(Void aVoid) {
+        mDatabaseRef.child(selectedKey).removeValue();
+        Toast.makeText(oldImageActivity.this, "Item has been Requested", Toast.LENGTH_SHORT).show(); }
+        });
 }
-//@Override
-//protected void onDestroy() {
-//        super.onDestroy();
-//        mDatabaseRef.removeEventListener(mDBListener);
-//        }
+
+
+@Override
+protected void onDestroy() {
+        super.onDestroy();
+        mDatabaseRef.removeEventListener(mDBListener);
+        }
 
 }
 
